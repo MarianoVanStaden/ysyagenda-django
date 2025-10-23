@@ -6,7 +6,7 @@
 
 ## Descripción
 
-YSY Agenda es una aplicación web desarrollada con Django que permite visualizar y gestionar turnos médicos, especialidades y profesionales de la salud. La aplicación consume una API REST desarrollada en Java (Spring Boot) y presenta la información de manera clara y organizada utilizando Bootstrap 5.
+YSY Agenda es una aplicación web desarrollada con Django que permite visualizar turnos médicos, especialidades y profesionales de la salud. La aplicación consume una propia de un backend con API REST desarrollada en Java (Spring Boot) y presenta la información de manera clara y organizada utilizando Bootstrap 5.
 
 Este proyecto fue desarrollado como Proyecto Final de la materia "Introducción a la Programación Web con Django".
 
@@ -31,6 +31,7 @@ Este proyecto fue desarrollado como Proyecto Final de la materia "Introducción 
 - Muestra información del paciente y profesional
 - Especialidad y fecha/hora del turno
 - Tabla responsiva con todos los detalles
+- Filtros y recuentos de turnos por fechas
 
 ### Especialidades
 - Catálogo de especialidades médicas disponibles
@@ -42,12 +43,13 @@ Este proyecto fue desarrollado como Proyecto Final de la materia "Introducción 
 - Información de contacto (email, teléfono, DNI)
 - Especialidad de cada profesional
 - Avatar con iniciales y color personalizado
+- Filtros y recuentos de profesionales por especialidad
 
 ## Requisitos Previos
 
 - Python 3.8 o superior
 - pip (gestor de paquetes de Python)
-- Backend Java ejecutándose en `http://localhost:8080` (opcional para pruebas)
+- Backend Java ejecutándose en url propia de producto "YSY AGENDA"
 - MySQL con la base de datos `ysyagenda` configurada (para el backend)
 
 ## Instalación y Configuración
@@ -97,7 +99,7 @@ La aplicación estará disponible en: `http://localhost:8000`
 
 La aplicación está configurada para consumir la API REST desde:
 ```
-https://sistemasmdq.com:8443/TurnosCPMI
+https://ysyagenda.com:8080/
 ```
 
 Esta API proporciona:
@@ -144,7 +146,7 @@ ysyagenda-django/
 | `/especialidades` | GET | Lista de todas las especialidades | 16 |
 | `/usuarios` | GET | Lista de usuarios (con filtro opcional `?tipo=PROFESIONAL`) | ~2,195 |
 
-**Base URL del Backend:** `https://sistemasmdq.com:8443/TurnosCPMI`
+**Base URL del Backend:** `https://ysyagenda.com:8080`
 
 **Filtros disponibles en la aplicación:**
 - **Turnos**: Hoy, Mañana, Esta Semana, Este Mes, Rango de fechas personalizado
@@ -203,8 +205,8 @@ except requests.exceptions.RequestException as e:
 ## Autor
 
 **Tu Nombre**
-- GitHub: [@TU_USUARIO](https://github.com/TU_USUARIO)
-- Email: tu.email@ejemplo.com
+- GitHub: [@MarianoVanStaden](https://github.com/MarianoVanStaden)
+- Email: ysyagenda@gmail.com
 
 ## Proyecto Final
 
