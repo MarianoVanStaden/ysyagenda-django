@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Turnos - YSY Agenda{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="bi bi-calendar3 text-primary"></i>
+            Lista de Turnos Medicos
+        </h2>
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <strong>Error:</strong> {{ error }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+<div class="alert alert-info">
+    <h5 class="alert-heading">
+        <i class="bi bi-info-circle"></i> Posibles soluciones:
+    </h5>
+    <ol>
+        <li>Asegurate de que el backend de Java este ejecutandose en <code>http://localhost:8080</code></li>
+        <li>Verifica que la base de datos MySQL este activa</li>
+        <li>Comprueba que hay datos de turnos en la base de datos</li>
+    </ol>
+</div>
+{% endif %}
+
+{% if turnos %}
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Profesional</th>
+                        <th>Especialidad</th>
+                        <th>Fecha y Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for turno in turnos %}
+                    <tr>
+                        <td>{{ turno.id }}</td>
+                        <td>
+                            <i class="bi bi-person-circle"></i>
+                            {{ turno.paciente.nombre }} {{ turno.paciente.apellido }}
+                            <br>
+                            <small class="text-muted">{{ turno.paciente.email }}</small>
+                        </td>
+                        <td>
+                            <i class="bi bi-person-badge"></i>
+                            {{ turno.profesional.nombre }} {{ turno.profesional.apellido }}
+                            <br>
+                            <small class="text-muted">{{ turno.profesional.email }}</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                {{ turno.profesional.especialidad|default:"No especificada" }}
+                            </span>
+                        </td>
+                        <td>
+                            <i class="bi bi-clock"></i>
+                            {{ turno.fecha }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-success mt-3">
+            <i class="bi bi-check-circle"></i>
+            Se encontraron <strong>{{ turnos|length }}</strong> turno(s) medico(s).
+        </div>
+    </div>
+</div>
+{% elif not error %}
+<div class="alert alert-warning">
+    <i class="bi bi-info-circle"></i>
+    No hay turnos disponibles en este momento.
+</div>
+{% endif %}
+
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="{% url 'agenda:home' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver al Inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

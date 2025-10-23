@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - YSY Agenda{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-light p-5 rounded">
+            <h1 class="display-4">
+                <i class="bi bi-calendar-check text-primary"></i>
+                Bienvenido a YSY Agenda
+            </h1>
+            <p class="lead">Sistema de Gestion de Turnos Medicos</p>
+            <hr class="my-4">
+            <p>
+                Esta aplicacion web permite visualizar y gestionar turnos medicos,
+                especialidades y profesionales del sistema de agenda medica.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <!-- Card Turnos -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-calendar3 text-primary" style="font-size: 3rem;"></i>
+                <h5 class="card-title mt-3">Turnos</h5>
+                <p class="card-text">
+                    Consulta la lista completa de turnos medicos programados con sus respectivos
+                    pacientes y profesionales.
+                </p>
+                <a href="{% url 'agenda:turnos' %}" class="btn btn-primary">
+                    Ver Turnos <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Especialidades -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-heart-pulse text-success" style="font-size: 3rem;"></i>
+                <h5 class="card-title mt-3">Especialidades</h5>
+                <p class="card-text">
+                    Explora todas las especialidades medicas disponibles en nuestro sistema de salud.
+                </p>
+                <a href="{% url 'agenda:especialidades' %}" class="btn btn-success">
+                    Ver Especialidades <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Profesionales -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-person-badge text-info" style="font-size: 3rem;"></i>
+                <h5 class="card-title mt-3">Profesionales</h5>
+                <p class="card-text">
+                    Conoce a nuestro equipo de profesionales de la salud y sus especialidades.
+                </p>
+                <a href="{% url 'agenda:profesionales' %}" class="btn btn-info text-white">
+                    Ver Profesionales <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h5 class="alert-heading">
+                <i class="bi bi-info-circle"></i> Informacion del Proyecto
+            </h5>
+            <p>
+                Este proyecto fue desarrollado con <strong>Django 5.2.7</strong> y <strong>Bootstrap 5</strong>
+                como parte del Proyecto Final de la materia "Introduccion a la Programacion Web con Django".
+            </p>
+            <hr>
+            <p class="mb-0">
+                <strong>Caracteristicas implementadas:</strong>
+            </p>
+            <ul>
+                <li>Vistas basadas en clases (Class-Based Views)</li>
+                <li>Herencia de plantillas con base.html</li>
+                <li>Consumo de API REST backend en Java</li>
+                <li>Diseno responsivo con Bootstrap 5</li>
+                <li>Manejo de errores y mensajes de usuario</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
