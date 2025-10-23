@@ -3,15 +3,3 @@ requests==2.32.3
 gunicorn==22.0.0
 python-dotenv==1.0.0
 whitenoise==6.7.0
-dj-database-url==2.2.0
-
-# MariaDB/MySQL - Elige UNA de estas opciones:
-# Opción 1 (recomendada para Windows):
-PyMySQL==1.1.0
-cryptography==42.0.5
-
-# Opción 2 (requiere compilación en Windows):
-# mysqlclient==2.2.4
-
-# Para PostgreSQL (descomenta si lo necesitas):
-# psycopg2-binary==2.9.9

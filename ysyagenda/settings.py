@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,41 +78,14 @@ WSGI_APPLICATION = 'ysyagenda.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Este proyecto solo consume APIs, por lo que usamos SQLite simple
 
-# Usar DATABASE_URL si está disponible (para servicios como Render, Railway, etc.)
-# Si no, usar SQLite para desarrollo
-if os.getenv('DATABASE_URL'):
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-elif os.getenv('DB_ENGINE'):
-    # Configuración manual de MariaDB/MySQL
-    DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
-            'NAME': os.getenv('DB_NAME', 'ysyagenda'),
-            'USER': os.getenv('DB_USER', 'root'),
-            'PASSWORD': os.getenv('DB_PASSWORD', ''),
-            'HOST': os.getenv('DB_HOST', 'localhost'),
-            'PORT': os.getenv('DB_PORT', '3306'),
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
-        }
-    }
-else:
-    # SQLite para desarrollo local
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 # Password validation
