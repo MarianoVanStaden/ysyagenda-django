@@ -99,7 +99,7 @@ La aplicación estará disponible en: `http://localhost:8000`
 
 La aplicación está configurada para consumir la API REST desde:
 ```
-https://sistemasmdq.com:8443/TurnosCPMI
+https://ysyagenda.com:8080/
 ```
 
 Esta API proporciona:
@@ -205,8 +205,8 @@ except requests.exceptions.RequestException as e:
 ## Autor
 
 **Tu Nombre**
-- GitHub: [@TU_USUARIO](https://github.com/TU_USUARIO)
-- Email: tu.email@ejemplo.com
+- GitHub: [@MarianoVanStaden](https://github.com/MarianoVanStaden)
+- Email: ysyagenda@gmail.com
 
 ## Proyecto Final
 
