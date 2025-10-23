@@ -95,11 +95,20 @@ La aplicación estará disponible en: `http://localhost:8000`
 
 ## Configuración del Backend
 
-Para que la aplicación funcione correctamente, necesitas tener el backend de Java ejecutándose:
+La aplicación está configurada para consumir la API REST desde:
+```
+https://sistemasmdq.com:8443/TurnosCPMI
+```
 
-1. Navega al directorio del backend Java
-2. Asegúrate de que MySQL esté ejecutándose
-3. Ejecuta el backend (generalmente en el puerto 8080)
+Esta API proporciona:
+- 2,925+ turnos médicos
+- 16 especialidades
+- 2,195+ usuarios (pacientes y profesionales)
+
+**Para desarrollo local**: Si deseas usar un backend local, edita `settings.py` línea 126 y cambia:
+```python
+API_BASE_URL = 'http://localhost:8080'
+```
 
 Si el backend no está disponible, la aplicación mostrará mensajes informativos en lugar de errores.
 
@@ -129,13 +138,17 @@ ysyagenda-django/
 
 ## Endpoints Consumidos del Backend
 
-| Endpoint | Método | Descripción |
-|----------|--------|-------------|
-| `/turnos` | GET | Lista de todos los turnos |
-| `/especialidades` | GET | Lista de todas las especialidades |
-| `/usuarios?tipo=PROFESIONAL` | GET | Lista de profesionales |
+| Endpoint | Método | Descripción | Registros |
+|----------|--------|-------------|-----------|
+| `/turnos` | GET | Lista de todos los turnos | ~2,925 |
+| `/especialidades` | GET | Lista de todas las especialidades | 16 |
+| `/usuarios` | GET | Lista de usuarios (con filtro opcional `?tipo=PROFESIONAL`) | ~2,195 |
 
-**Base URL del Backend:** `http://localhost:8080`
+**Base URL del Backend:** `https://sistemasmdq.com:8443/TurnosCPMI`
+
+**Filtros disponibles en la aplicación:**
+- **Turnos**: Hoy, Mañana, Esta Semana, Este Mes, Rango de fechas personalizado
+- **Profesionales**: Por especialidad, búsqueda por nombre/apellido
 
 ## Tecnologías Utilizadas
 

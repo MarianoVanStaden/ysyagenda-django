@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %}Profesionales - YSY Agenda{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="bi bi-person-badge text-info"></i>
+            Profesionales de la Salud
+        </h2>
+    </div>
+</div>
+
+<!-- Filtros de busqueda y especialidad -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-funnel"></i> Filtrar Profesionales
+                </h5>
+
+                <form method="get" class="row g-3">
+                    <!-- Campo de busqueda -->
+                    <div class="col-md-6">
+                        <label for="busqueda" class="form-label">Buscar por nombre o apellido:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="busqueda" name="busqueda"
+                                   placeholder="Ejemplo: Juan, Garcia..." value="{{ busqueda }}">
+                        </div>
+                    </div>
+
+                    <!-- Filtro por especialidad -->
+                    <div class="col-md-4">
+                        <label for="especialidad" class="form-label">Filtrar por especialidad:</label>
+                        <select class="form-select" id="especialidad" name="especialidad">
+                            <option value="">Todas las especialidades</option>
+                            {% for esp in especialidades %}
+                            <option value="{{ esp.nombre }}" {% if especialidad_filtro == esp.nombre %}selected{% endif %}>
+                                {{ esp.nombre }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="bi bi-search"></i> Buscar
+                        </button>
+                        <a href="{% url 'agenda:profesionales' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <strong>Error:</strong> {{ error }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+<div class="alert alert-info">
+    <h5 class="alert-heading">
+        <i class="bi bi-info-circle"></i> Posibles soluciones:
+    </h5>
+    <ol>
+        <li>Asegurate de que el backend este disponible en <code>https://sistemasmdq.com:8443/TurnosCPMI</code></li>
+        <li>Verifica que la base de datos MySQL este activa</li>
+        <li>Comprueba que hay datos de profesionales en la base de datos</li>
+    </ol>
+</div>
+{% endif %}
+
+{% if profesionales %}
+<!-- Contador de profesionales -->
+<div class="alert alert-info mb-3">
+    <i class="bi bi-info-circle"></i>
+    {% if especialidad_filtro or busqueda %}
+        Mostrando <strong>{{ profesionales_filtrados }}</strong> de <strong>{{ total_profesionales }}</strong> profesionales
+        {% if especialidad_filtro and busqueda %}
+            (especialidad: <strong>{{ especialidad_filtro }}</strong>, busqueda: <strong>{{ busqueda }}</strong>)
+        {% elif especialidad_filtro %}
+            (especialidad: <strong>{{ especialidad_filtro }}</strong>)
+        {% elif busqueda %}
+            (busqueda: <strong>{{ busqueda }}</strong>)
+        {% endif %}
+    {% else %}
+        Se encontraron <strong>{{ total_profesionales }}</strong> profesional(es) de la salud en total.
+    {% endif %}
+</div>
+
+<div class="row">
+    {% for profesional in profesionales %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center me-3"
+                         style="width: 60px; height: 60px; font-size: 1.5rem; {% if profesional.avatarColor %}background-color: {{ profesional.avatarColor }} !important;{% endif %}">
+                        {{ profesional.nombre|first }}{{ profesional.apellido|first }}
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-0">
+                            {{ profesional.nombre }} {{ profesional.apellido }}
+                        </h5>
+                        <span class="badge bg-info">{{ profesional.especialidad|default:"Sin especialidad" }}</span>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-2">
+                    <i class="bi bi-envelope text-muted"></i>
+                    <small>{{ profesional.email }}</small>
+                </div>
+
+                <div class="mb-2">
+                    <i class="bi bi-phone text-muted"></i>
+                    <small>{{ profesional.celular }}</small>
+                </div>
+
+                <div class="mb-2">
+                    <i class="bi bi-card-text text-muted"></i>
+                    <small>DNI: {{ profesional.dni }}</small>
+                </div>
+
+                <div class="mt-3">
+                    <span class="badge bg-secondary">ID: {{ profesional.id }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% elif not error %}
+<div class="alert alert-warning">
+    <i class="bi bi-info-circle"></i>
+    No hay profesionales disponibles en este momento.
+</div>
+{% endif %}
+
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="{% url 'agenda:home' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver al Inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

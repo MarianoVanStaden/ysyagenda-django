@@ -123,4 +123,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # API Backend Configuration
-API_BASE_URL = 'http://localhost:8080'
+API_BASE_URL = 'https://sistemasmdq.com:8443/TurnosCPMI'
+# API_BASE_URL = 'http://localhost:8080'  # Para desarrollo local

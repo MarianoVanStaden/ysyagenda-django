@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Especialidades - YSY Agenda{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="bi bi-heart-pulse text-success"></i>
+            Especialidades Medicas
+        </h2>
+    </div>
+</div>
+
+{% if error %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <strong>Error:</strong> {{ error }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+<div class="alert alert-info">
+    <h5 class="alert-heading">
+        <i class="bi bi-info-circle"></i> Posibles soluciones:
+    </h5>
+    <ol>
+        <li>Asegurate de que el backend este disponible en <code>https://sistemasmdq.com:8443/TurnosCPMI</code></li>
+        <li>Verifica que la base de datos MySQL este activa</li>
+        <li>Comprueba que hay datos de especialidades en la base de datos</li>
+    </ol>
+</div>
+{% endif %}
+
+{% if especialidades %}
+<div class="row">
+    {% for especialidad in especialidades %}
+    <div class="col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-heart-pulse text-success" style="font-size: 2.5rem;"></i>
+                <h5 class="card-title mt-3">{{ especialidad.nombre }}</h5>
+                <p class="text-muted mb-0">
+                    <small>ID: {{ especialidad.id }}</small>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="alert alert-success mt-3">
+    <i class="bi bi-check-circle"></i>
+    Se encontraron <strong>{{ especialidades|length }}</strong> especialidad(es) medica(s).
+</div>
+{% elif not error %}
+<div class="alert alert-warning">
+    <i class="bi bi-info-circle"></i>
+    No hay especialidades disponibles en este momento.
+</div>
+{% endif %}
+
+<div class="row mt-3">
+    <div class="col-12">
+        <a href="{% url 'agenda:home' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver al Inicio
+        </a>
+    </div>
+</div>
+{% endblock %}

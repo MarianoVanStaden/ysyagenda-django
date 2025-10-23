@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load agenda_filters %}
 
 {% block title %}Turnos - YSY Agenda{% endblock %}
 
@@ -9,6 +10,56 @@
             <i class="bi bi-calendar3 text-primary"></i>
             Lista de Turnos Medicos
         </h2>
+    </div>
+</div>
+
+<!-- Filtros de fecha -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-funnel"></i> Filtrar Turnos
+                </h5>
+
+                <!-- Botones de filtro rápido -->
+                <div class="btn-group mb-3" role="group">
+                    <a href="{% url 'agenda:turnos' %}" class="btn btn-outline-primary {% if not filtro_activo %}active{% endif %}">
+                        <i class="bi bi-calendar"></i> Todos
+                    </a>
+                    <a href="{% url 'agenda:turnos' %}?filtro=hoy" class="btn btn-outline-primary {% if filtro_activo == 'hoy' %}active{% endif %}">
+                        <i class="bi bi-calendar-day"></i> Hoy
+                    </a>
+                    <a href="{% url 'agenda:turnos' %}?filtro=manana" class="btn btn-outline-primary {% if filtro_activo == 'manana' %}active{% endif %}">
+                        <i class="bi bi-calendar-plus"></i> Manana
+                    </a>
+                    <a href="{% url 'agenda:turnos' %}?filtro=semana" class="btn btn-outline-primary {% if filtro_activo == 'semana' %}active{% endif %}">
+                        <i class="bi bi-calendar-week"></i> Esta Semana
+                    </a>
+                    <a href="{% url 'agenda:turnos' %}?filtro=mes" class="btn btn-outline-primary {% if filtro_activo == 'mes' %}active{% endif %}">
+                        <i class="bi bi-calendar-month"></i> Este Mes
+                    </a>
+                </div>
+
+                <!-- Filtro por rango de fechas -->
+                <form method="get" class="row g-3">
+                    <div class="col-md-4">
+                        <label for="fecha_desde" class="form-label">Desde:</label>
+                        <input type="date" class="form-control" id="fecha_desde" name="fecha_desde" value="{{ fecha_desde }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="fecha_hasta" class="form-label">Hasta:</label>
+                        <input type="date" class="form-control" id="fecha_hasta" name="fecha_hasta" value="{{ fecha_hasta }}">
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <input type="hidden" name="filtro" value="rango">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Buscar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -23,7 +74,7 @@
         <i class="bi bi-info-circle"></i> Posibles soluciones:
     </h5>
     <ol>
-        <li>Asegurate de que el backend de Java este ejecutandose en <code>http://localhost:8080</code></li>
+        <li>Asegurate de que el backend este disponible en <code>https://sistemasmdq.com:8443/TurnosCPMI</code></li>
         <li>Verifica que la base de datos MySQL este activa</li>
         <li>Comprueba que hay datos de turnos en la base de datos</li>
     </ol>
@@ -33,6 +84,17 @@
 {% if turnos %}
 <div class="row">
     <div class="col-12">
+        <!-- Contador de turnos -->
+        <div class="alert alert-info mb-3">
+            <i class="bi bi-info-circle"></i>
+            {% if filtro_activo %}
+                Mostrando <strong>{{ turnos_filtrados }}</strong> de <strong>{{ total_turnos }}</strong> turnos totales
+                (filtro: <strong>{% if filtro_activo == 'hoy' %}Hoy{% elif filtro_activo == 'manana' %}Manana{% elif filtro_activo == 'semana' %}Esta Semana{% elif filtro_activo == 'mes' %}Este Mes{% elif filtro_activo == 'rango' %}Rango Personalizado{% endif %}</strong>)
+            {% else %}
+                Se encontraron <strong>{{ total_turnos }}</strong> turno(s) medico(s) en total.
+            {% endif %}
+        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead class="table-primary">
@@ -50,9 +112,9 @@
                         <td>{{ turno.id }}</td>
                         <td>
                             <i class="bi bi-person-circle"></i>
-                            {{ turno.paciente.nombre }} {{ turno.paciente.apellido }}
+                            {{ turno.paciente.nombre }}
                             <br>
-                            <small class="text-muted">{{ turno.paciente.email }}</small>
+                            <small class="text-muted">{{ turno.paciente.email|ofuscar_email }}</small>
                         </td>
                         <td>
                             <i class="bi bi-person-badge"></i>
@@ -73,11 +135,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-
-        <div class="alert alert-success mt-3">
-            <i class="bi bi-check-circle"></i>
-            Se encontraron <strong>{{ turnos|length }}</strong> turno(s) medico(s).
         </div>
     </div>
 </div>

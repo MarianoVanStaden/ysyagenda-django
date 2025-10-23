@@ -8,7 +8,8 @@
       "Bash(django-admin startproject:*)",
       "Bash(python manage.py startapp:*)",
       "Bash(python manage.py:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []
