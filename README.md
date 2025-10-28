@@ -6,7 +6,7 @@
 
 ## Descripción
 
-YSY Agenda es una aplicación web desarrollada con Django que permite visualizar turnos médicos, especialidades y profesionales de la salud. La aplicación consume una propia de un backend con API REST desarrollada en Java (Spring Boot) y presenta la información de manera clara y organizada utilizando Bootstrap 5.
+YSY Agenda es una aplicación web desarrollada con Django que permite visualizar turnos médicos, especialidades y profesionales de la salud. La aplicación consume una propia de un backend con API REST desarrollada en Java (Spring Boot) y presenta la información de manera clara y organizada utilizando Bootstrap 5. No se pueden modificar los datos, dado a que dicha información esta actualmente en producción.
 
 Este proyecto fue desarrollado como Proyecto Final de la materia "Introducción a la Programación Web con Django".
 
